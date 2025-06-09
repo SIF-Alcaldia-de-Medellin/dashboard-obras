@@ -7,6 +7,7 @@ import SkeletonMap from "./components/SkeletonMap";
 import SkeletonPaneles from "./components/SkeletonPaneles";
 import SkeletonSummary from "./components/SkeletonSummary";
 import SkeletonFilterButton from "./components/SkeletonFilterButton";
+import SkeletonTableContracts from "./components/SkeletonTableContracts";
 
 const MapaObras = lazy(() => import("./components/MapaObras"));
 const Paneles = lazy(() => import("./components/Paneles"));
@@ -14,6 +15,7 @@ const Summary = lazy(() => import("./components/Summary"));
 const FilterButton = lazy(() => import("./components/FilterButton"));
 const HistogramaComuna = lazy(() => import("./components/HistogramaComuna"));
 const RadarObras = lazy(() => import("./components/RadarObras"));
+const TableContracts = lazy(() => import("./components/TableContracts"));
 
 const App = () => {
   const [filters, setFilters] = useState({
@@ -93,19 +95,29 @@ const App = () => {
                 <Summary data={obrasFiltradas} className="w-full lg:w-[calc(2/5*100%+20px)]"/>
               </Suspense>
             </div>
-
+            <div className="bg-white p-[20px] rounded-2xl hidden lg:inline-block">
+              <Suspense fallback={<SkeletonTableContracts className="max-h-[400px] min-w-[100%] overflow-auto"/>}>
+                <TableContracts data={obrasFiltradas} className="max-h-[400px] overflow-auto"/>
+              </Suspense>
+            </div>
             <Suspense fallback={<div className="w-full rounded-2xl bg-white animate-pulse h-[600px]"></div>}>
               <div className="w-full p-2 px-4 rounded-2xl bg-white">
                 <h3 className="font-bold heading-5 text-center">Valor Total de Contratos por comuna</h3>
                 <HistogramaComuna data={obrasFiltradas} />
               </div>
             </Suspense>
-            <Suspense fallback={<div className="w-full rounded-2xl bg-white animate-pulse h-[600px]"></div>}>
+            {/* <Suspense fallback={<div className="w-full rounded-2xl bg-white animate-pulse h-[600px]"></div>}>
+              <div className="w-full p-2 px-4 rounded-2xl bg-white max-w-1/2">
+                <h3 className="font-bold heading-5 text-center">Valor Total de Contratos por comuna</h3>
+                <PieChartObras data={obrasFiltradas} />
+              </div>
+            </Suspense> */}
+            {/* <Suspense fallback={<div className="w-full rounded-2xl bg-white animate-pulse h-[600px]"></div>}>
               <div className="w-full p-2 px-4 rounded-2xl bg-white">
                   <h3 className="font-bold heading-5 text-center">Cantidad Total ejecutada por actividad</h3>
                   <RadarObras data={obrasFiltradas}/>
               </div>
-            </Suspense>
+            </Suspense> */}
             <Suspense fallback={<SkeletonFilterButton />}>
               <FilterButton data={todasLasObras}/>
             </Suspense> 
